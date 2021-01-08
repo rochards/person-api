@@ -24,7 +24,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) throws PersonNotFoundException {
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) {
         var personDTO = personService.findById(id);
         return ResponseEntity.ok(personDTO);
     }
@@ -33,5 +33,11 @@ public class PersonController {
     public ResponseEntity<PersonDTO> create(@Valid @RequestBody PersonDTO personDTO) {
         var createdPerson = personService.createPerson(personDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPerson);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        personService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
