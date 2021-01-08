@@ -28,6 +28,7 @@ public class Person {
 
     @Column(nullable = false, unique = true)
     private String cpf;
+
     private LocalDate birthDate;
 
     // uma pessoa pode ter varios telefones. Essa anotacao tbm vem do JPA
