@@ -20,9 +20,8 @@ public class PersonService {
 
     public PersonDTO createPerson(PersonDTO personDTO) {
 
-        var person = personMapper.toModel(personDTO); // isso faz o parse automatico das informacoes
-
-        var createdPerson = personRepository.save(person);
+        var personToCreate = personMapper.toModel(personDTO); // isso faz o parse automatico das informacoes
+        var createdPerson = personRepository.save(personToCreate);
 
         return personMapper.toDTO(createdPerson);
     }
@@ -33,11 +32,32 @@ public class PersonService {
                 .collect(Collectors.toList());
     }
 
-    public PersonDTO findById(Long id) throws PersonNotFoundException {
+    public PersonDTO findById(Long id)  {
 
         var person = personRepository.findById(id)
                 .orElseThrow(() -> new PersonNotFoundException(id));
 
         return personMapper.toDTO(person);
+    }
+
+    public void deleteById(Long id) {
+        verifyIfPersonNotExists(id);
+        personRepository.deleteById(id);
+    }
+
+    public PersonDTO updateById( Long id, PersonDTO personDTO) {
+
+        verifyIfPersonNotExists(id);
+
+        var personToUpdate = personMapper.toModel(personDTO);
+        var updatedPerson = personRepository.save(personToUpdate);
+
+        return personMapper.toDTO(updatedPerson);
+    }
+
+    private void verifyIfPersonNotExists(Long id) {
+        if (!personRepository.existsById(id)) {
+            throw new PersonNotFoundException(id);
+        }
     }
 }
