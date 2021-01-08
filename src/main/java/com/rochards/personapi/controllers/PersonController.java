@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/people") // caminho principal da API
+//@AllArgsConstructor(onConstrucutor = @__(Autowired)) anotacao do lambok para fazer injecao quando tem muitas pra fazer
 public class PersonController {
 
     @Autowired
