@@ -1,7 +1,7 @@
 package com.rochards.personapi.controllers;
 
 import com.rochards.personapi.dto.request.PersonDTO;
-import com.rochards.personapi.entities.Person;
+import com.rochards.personapi.exceptions.types.PersonNotFoundException;
 import com.rochards.personapi.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +21,12 @@ public class PersonController {
     @GetMapping
     public List<PersonDTO> getAll() {
         return personService.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonDTO> findById(@PathVariable Long id) throws PersonNotFoundException {
+        var personDTO = personService.findById(id);
+        return ResponseEntity.ok(personDTO);
     }
 
     @PostMapping
