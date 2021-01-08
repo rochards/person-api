@@ -2,7 +2,6 @@ package com.rochards.personapi.controllers;
 
 import com.rochards.personapi.dto.request.PersonDTO;
 import com.rochards.personapi.entities.Person;
-import com.rochards.personapi.repositories.PersonRepository;
 import com.rochards.personapi.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,18 +16,15 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
     private PersonService personService;
 
     @GetMapping
-    public List<Person> getAll() {
-        return personRepository.findAll();
+    public List<PersonDTO> getAll() {
+        return personService.listAll();
     }
 
     @PostMapping
-    public ResponseEntity<Person> create(@Valid @RequestBody PersonDTO personDTO) {
+    public ResponseEntity<PersonDTO> create(@Valid @RequestBody PersonDTO personDTO) {
         var createdPerson = personService.createPerson(personDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPerson);
     }

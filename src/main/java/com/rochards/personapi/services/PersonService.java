@@ -7,6 +7,9 @@ import com.rochards.personapi.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PersonService {
 
@@ -15,8 +18,18 @@ public class PersonService {
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
-    public Person createPerson(PersonDTO personDTO) {
+    public PersonDTO createPerson(PersonDTO personDTO) {
+
         var person = personMapper.toModel(personDTO); // isso faz o parse automatico das informacoes
-        return personRepository.save(person);
+
+        var createdPerson = personRepository.save(person);
+
+        return personMapper.toDTO(createdPerson);
+    }
+
+    public List<PersonDTO> listAll() {
+        return personRepository.findAll()
+                .stream().map(personMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
