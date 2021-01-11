@@ -2,6 +2,7 @@ package com.rochards.personapi.controllers;
 
 import com.rochards.personapi.dto.request.PersonDTO;
 import com.rochards.personapi.services.PersonService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/people") // caminho principal da API
-//@AllArgsConstructor(onConstrucutor = @__(Autowired)) anotacao do lambok para fazer injecao quando tem muitas pra fazer
+@AllArgsConstructor(onConstructor = @__(@Autowired)) //anotacao do lambok para fazer injecao quando tem muitas pra fazer
 public class PersonController {
 
-    @Autowired
-    private PersonService personService;
+    private final PersonService personService;
 
     @GetMapping
     public List<PersonDTO> getAll() {

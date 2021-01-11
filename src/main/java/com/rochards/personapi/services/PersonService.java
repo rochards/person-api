@@ -4,6 +4,7 @@ import com.rochards.personapi.dto.request.PersonDTO;
 import com.rochards.personapi.exceptions.types.PersonNotFoundException;
 import com.rochards.personapi.mappers.PersonMapper;
 import com.rochards.personapi.repositories.PersonRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     private final PersonMapper personMapper = PersonMapper.INSTANCE;
 
